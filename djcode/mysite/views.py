@@ -77,7 +77,8 @@ def reply(query,result):
 def search_form(request):
     return render(
             request,
-            'search_form.html'
+            'force.html'
+            #'search_form.html'
             #template_name = '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite',
             #context_instance=RequestContext(request)
             )
