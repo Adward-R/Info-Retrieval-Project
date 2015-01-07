@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 STATICFILES_DIRS = (
-    '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite',   
+    '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite/static/',   
 )
 
 TEMPLATE_DIRS = (
