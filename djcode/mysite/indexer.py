@@ -1,8 +1,8 @@
 #############################################################################
 #oh, no, I can not use chinese in this file ,sh*t
-#index V0.1, 
+#index V0.1,
 #read file start from 1.txt to *.txt
-## added (use replace instand) ###no re lib 
+## added (use replace instand) ###no re lib
 #--such as , . ; : ' " is in the index...   :(
 #differ lower like 'a' and upper 'A'
 ## added ###did not use stop words
@@ -14,7 +14,7 @@ stopwords = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n
 
 def read():
 	print '###############start###########################################################'
-	n= 0
+	n= -1
 	index= []
 	path= sys.path[0]#.replace(':\\',':')
 	#sum=open(path+ "/sum.txt","w")
@@ -22,17 +22,17 @@ def read():
 		#open file ,if fail write back?
 		n= n+1
 		try:
-			f= open(path+ "/docs/%d"%n,"r") 
+			f= open(path+ "/static/docs/"+str(n)+".txt","r")
 		except IOError:
 			break
 		print "analyzing the NO.%d doc"%n
 		#read file
 		i= 0
-		
+
 		line= f.readline()
 		for line in f:
 			i=i+1
-			
+
 			########################################################
 			templine= line.lower() #change to lower
 			templine= change(templine)
@@ -44,7 +44,7 @@ def read():
 			templine= templine.replace(':',' ')
 			templine= templine.replace(';',' ')
 			templine= templine.replace('=',' ')
-			templine= templine.replace('?',' ')	
+			templine= templine.replace('?',' ')
 			templine= templine.replace('~',' ')
 			templine= templine.replace('`',' ')
 			templine= templine.replace('_',' ')
@@ -80,7 +80,7 @@ def read():
 			templine= templine.replace('8',' ')
 			templine= templine.replace('9',' ')
 			editline= templine.split()
-			
+
 			#################################################
 			#start routine to read word
 			for word in editline:
@@ -88,7 +88,7 @@ def read():
 					#if in the stop words ,continue
 					stopwords.index(word)
 					continue
-				except ValueError:	
+				except ValueError:
 					try:
 						#if word is in index,add [doc,place]
 						k= index.index(word)
@@ -97,7 +97,7 @@ def read():
 						#else add word,add [[doc,place]]
 						index.append(word)
 						index.append([[n,i]])
-			
+
 		f.close()
 		#some information of the doc analyze
 		#sum.write("doc %d "%n)
@@ -106,7 +106,7 @@ def read():
 	print "start to write the index file"
 	#print the index in the result file
 	i= 0
-	
+
 	if not os.path.exists('index'):
 		os.mkdir('index')
 	while 1:
@@ -118,12 +118,12 @@ def read():
 			f= open(newdoc,'w')
 			post= index[i+1]  #post is [[1,2],[1,3],......
 			i= i+2
-			#f.write(word) 
-			#f.write('\n') 
+			#f.write(word)
+			#f.write('\n')
 			#read post such as [[1,2],[1,3],......
 			j= 0
 			t= 0
-			count= 0 
+			count= 0
 			query =''
 			while 1:
 				try:
@@ -144,7 +144,7 @@ def read():
 						count =1
 						t= a
 					j=j+1
-					
+
 				except IndexError:
 					#out of post, break
 					f.write("%d:"%count)
@@ -154,12 +154,12 @@ def read():
 					#f.write(word)
 					#f.write(' appear %d times' %j)
 					break
-				
+
 			f.close()
 		except IndexError:
 			#out of index, break
 			break
-	
+
 	#end.............
 	print 'the work finish'
 	print '###############finish###########################################################'
@@ -171,11 +171,11 @@ def change(str):
 			newstr+= ' '
 		else:
 			newstr+= char
-	return newstr	
-		
+	return newstr
+
 def main():
 
 	read()
-	
+
 if __name__ == '__main__':
 	main()

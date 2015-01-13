@@ -13,14 +13,14 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 STATICFILES_DIRS = (
-    '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite/static/',   
+    '/root/Adward/djcode/mysite/static/',
 )
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite',
+    '/root/Adward/djcode/mysite/',
 )
 
 # Quick-start development settings - unsuitable for production

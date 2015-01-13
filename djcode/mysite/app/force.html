@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="../../static/lib/d3.min.js"></script>
+</head>
+
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+#tooltip {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  background-color: white;
+  opacity: 0.8;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+#tooltip.hidden {
+  display: none;
+}
+
+#tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+</style>
+<body>
+
+<form>
+  <label><input type="radio" name="mode" value="BirthCountry" checked>BirthCountry</label>
+  <label><input type="radio" name="mode" value="CitizenshipBasis">CitizenshipBasis</label>
+  <label><input type="radio" name="mode" value="CitizenshipBasis">CitizenshipBasis</label>
+  <label><input type="radio" name="mode" value="CitizenshipBasis">CitizenshipBasis</label>
+  <label><input type="radio" name="mode" value="CitizenshipBasis">CitizenshipBasis</label>
+  <label><input type="radio" name="mode" value="CitizenshipBasis">CitizenshipBasis</label>
+  <label><input type="radio" name="mode" value="Gender">Gender</label>
+  <label><input type="radio" name="mode" value="CitizenshipCountry">CitizenshipCountry</label>
+  <label><input type="radio" name="mode" value="PassportCountry">PassportCountry</label>
+  <label><input type="radio" name="mode" value="CurrentEmploymentType">CurrentEmploymentType</label>
+  <label><input type="radio" name="mode" value="CurrentEmploymentTitle">CurrentEmploymentTitle</label>
+  <label><input type="radio" name="mode" value="MilitaryServiceBranch">MilitaryServiceBranch</label>
+  <label><input type="radio" name="mode" value="MilitaryDischargeType">MilitaryDischargeType</label>
+</form>
+
+<div id="tooltip" class="hidden">
+<p><strong>Details</strong></p>
+<p>Full Name: <span id="name">100</span></p>
+<p>Gender: <span id="gender">100</span></p>
+<p>BirthDate: <span id="birthday"></p>
+<p>Citizenship: <span id="citizenship">100</span></p>
+<p>Passport: <span id="passport">100</span></p>
+<p>Email: <span id="email">100</span></p>
+</div>
+
+<script>
+
+var gContent
+var gWidth = 1280
+var gHeight = 720
+var gColor = d3.scale.category20()
+
+var gForce = d3.layout.force()
+.charge(-120)
+.linkDistance(400)
+.size([gWidth, gHeight])
+
+var gSvg = d3.select("body").append("svg")
+.attr("width", gWidth)
+.attr("height", gHeight)
+
+d3.selectAll("input").on("change", function() {
+  d3.selectAll('circle')
+  .data([])
+  .exit()
+  .remove()
+
+  d3.selectAll('line')
+  .data([])
+  .exit()
+  .remove()
+
+  refresh(this.value)
+})
+
+d3.json('../../static/json/content.json', function(error, content) {
+  gContent = content
+  refresh('BirthCountry')
+})
+
+function refresh(attrname) {
+  var graph = gContent[attrname]
+  gForce.nodes(graph.nodes)
+  .links(graph.links)
+  .start()
+  
+  var link = gSvg.selectAll(".link")
+  .data(graph.links)
+  .enter().append("line")
+  .attr("class", "link")
+  .style("stroke-width", function(d) { return Math.sqrt(d.value) })
+  
+  var node = gSvg.selectAll(".node")
+  .data(graph.nodes)
+  .enter().append("circle")
+  .attr("class", "node")
+  .attr("r", 5)
+  .style("fill", function(d) { return gColor(d.group) })
+  .call(gForce.drag)
+  .on("mouseover", function(d) {
+    d3.select("#tooltip")
+    .select("#name")
+    .text(d.FirstName + ' ' + d.LastName)
+    
+    d3.select("#tooltip")
+    .select("#gender")
+    .text(d.Gender)
+    
+    d3.select("#tooltip")
+    .select("#birthday")
+    .text(d.BirthDate)
+    
+    d3.select("#tooltip")
+    .select("#citizenship")
+    .text(d.CitizenshipCountry)
+    
+    d3.select("#tooltip")
+    .select("#passport")
+    .text(d.PassportCountry)
+    
+    d3.select("#tooltip")
+    .select("#email")
+    .text(d.EmailAddress)
+    
+    d3.select("#tooltip")
+    .classed("hidden", false)
+    .style("left", d.x + "px")
+    .style("top", d.y + "px")
+  })
+  .on("mouseout", function(d) {
+    d3.select("#tooltip")
+    .classed("hidden", true)
+  })
+  
+  node.append("title")
+  .text(function(d) { return d.name })
+  
+  gForce.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x })
+    .attr("y1", function(d) { return d.source.y })
+    .attr("x2", function(d) { return d.target.x })
+    .attr("y2", function(d) { return d.target.y })
+    
+    node.attr("cx", function(d) { return d.x })
+    .attr("cy", function(d) { return d.y })
+  })
+}
+
+</script>
+</body>
+</html>

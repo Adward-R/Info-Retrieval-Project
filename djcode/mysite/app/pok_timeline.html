@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<html>
+<head>
+<link rel='stylesheet' href='../../static/style/eventDrops.css' />
+<style type='text/css'>
+
+body {
+  font-family: verdana, sans-serif;
+}
+
+#chart_placeholder {
+  float: left;
+  clear: left;
+  overflow: hidden;
+}
+
+#legend {
+  margin-top: 100px;
+  margin-right: 20px;
+  padding: 20px;
+  width: 400px;
+  float: right;
+  clear: right;
+  overflow: hidden;
+  background: #eeeeee;
+  border-radius:5px;
+}
+
+</style>
+</head>
+
+</body>
+
+<div style='text-align: center'></div>
+<div id='chart_placeholder'></div>
+<div id='legend'>
+  <h3></h3>
+  <p></p>
+</div>
+
+<script src='../../static/lib/d3.min.js'></script>
+<script src='../../static/lib/d3.chart.js'></script>
+<script src='../../static/eventDrops.js'></script>
+<script>
+
+var chartPlaceholder = document.getElementById('chart_placeholder')
+var eventsmap = {}
+var timemap = {}
+var events = []
+var data = []
+
+var endTime = Date.now()
+var oneMonth = 30 * 24 * 60 * 60 * 1000
+var startTime = new Date('1990')
+
+function createEvent(name) {
+  var event = {}
+  event.name = events[eventsmap[name]].name
+  event.info = events[eventsmap[name]].info
+  event.dates = events[eventsmap[name]].dates
+  return event
+}
+
+var color = d3.scale.category20()
+var locale = d3.locale({
+  'decimal': ',',
+  'thousands': ' ',
+  'grouping': [3],
+  'dateTime': '%A %e %B %Y, %X',
+  'date': '%d/%m/%Y',
+  'time': '%H:%M:%S',
+  'periods': ['AM', 'PM'],
+  'days': ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thurday', 'Friday', 'Saturday'],
+  'shortDays': ['Sun.', 'Mon.', 'Tue.', 'Wen.', 'Thu.', 'Fri.', 'Sat.'],
+  'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  'shortMonths': ['Jan.', 'Feb.', 'Mar', 'Apr', 'May', 'Jun', 'Jul.', 'Aug', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
+})
+
+var graph = d3.chart.eventDrops()
+  .start(new Date(startTime))
+  .end(new Date(endTime))
+  .locale(locale)
+  .eventColor(function (datum, index) {
+    return color(index)
+  })
+  .width(800)
+  .axisFormat(function(xAxis) {
+    xAxis.ticks(5)
+  })
+  .eventHover(function(el) {
+    var series = el.parentNode.firstChild.innerHTML
+    var timestamp = d3.select(el).data()[0]
+    d3.select('#legend')
+    .select('h3')
+    .style('text-align', 'center')
+    .text(timestamp)
+    
+    d3.select('#legend')
+    .select('p')
+    .text(timemap[timestamp][0])
+    console.log(timemap[timestamp][0])
+  })
+
+var updateDelimiter = function(value) {
+  graph.hasDelimiter(!graph.hasDelimiter())(element)
+}
+
+var addLine = function() {
+  var data = element.datum()
+  var i = data.length
+  data.push(createEvent(names[i]))
+  elements = element.datum(data)
+  graph(element)
+}
+
+var removeLine = function() {
+  var data = element.datum()
+  data.pop()
+  element = element.datum(data)
+  graph(element)
+}
+
+d3.json('../../static/json/events.json', function(d) {
+  for (var it in d ) {
+    timeline = d[it]
+    var event = {}
+    eventsmap[timeline.name] = it
+    event.name = timeline.name
+    event.info = []
+    event.dates = []
+    for (var i in timeline.events) {
+      var year = Math.round(timeline.events[i].date - 0.5)
+      var month = Math.round((timeline.events[i].date - year) * 10 + 1)
+      var new_date = new Date(Date.parse(year + '/' + month + '/01'))
+      event.dates.push(new_date)
+      event.info.push(timeline.events[i].event)
+    }
+    events.push(event)
+  }
+
+  for (var i in events) {
+    var ev = events[i]
+    for (var it in ev.dates) {
+      var dat = ev.dates[it]
+      timemap[dat] || (timemap[dat] = [])
+      timemap[dat].push(ev.info[it])
+    }
+  }
+
+  for (var it in events) {
+    data.push(createEvent(events[it].name))
+    var element = d3.select(chartPlaceholder)
+                  .append('div')
+                  .datum(data)
+  }
+  graph(element)
+})
+
+</script>
+</body>
+</html>

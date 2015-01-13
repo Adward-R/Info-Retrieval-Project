@@ -1,0 +1,233 @@
+
+{
+    "timeline":
+    {
+        "headline":"",
+        "type":"default",
+		"text":"",
+		"startDate":"2014,01,19",
+        "date": [
+            {
+                "startDate":"2014,01,19,10,00,00",
+                "headline":"GAStech 高层和Kronos 政府高层决定在Kronos 国会大楼举办宴会。",
+                "text":"Homeland Illumination & Kronos Star",
+                "asset":
+                {
+                    "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+            {
+                        "startDate":"2014,01,20,09,26,00",
+                        "headline":"GAStech Kronos 高层正在总部开会庆祝上个月的公共建设成果。他们即将离开总部前往Kronos 国会大楼与总统和诸多高官会晤并举办宴会。",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,10,15,00",
+                        "headline":"GAStech 大楼出现火灾警报，雇员撤离大楼。",
+                        "text":"Homeland Illumination & Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,10,20,00",
+                        "headline":"一架直升机从GAStech 楼顶飞走。",
+                        "text":"Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,11,23,00",
+                        "headline":"CEO 出现在国会大厦，其他人没有出现",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,11,45,00",
+                        "headline":"消防部门确认误报，GAStech 员工返回大楼。",
+                        "text":"Homeland Illumination & Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,12,40,00",
+                        "headline":"警车赶到GAStech 大楼，随即封锁大楼。",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,13,40,00",
+                        "headline":"GAStech 高管(除CEO)集体失联。",
+                        "text":"Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,14,00,00",
+                        "headline":"一位政府安全专员进入大楼。",
+                        "text":"Homeland Illumination & Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,14,30,00",
+                        "headline":"一架私人飞机飞离Abila 机场，乘客无法确定。",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,15,20,00",
+                        "headline":"GAStech 员工被允许离开大楼。",
+                        "text":"Homeland Illumination & Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,17,30,00",
+                        "headline":"有部分员工确认了绑架事件。",
+                        "text":"Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,18,02,00",
+                        "headline":"第二架私人飞机飞离Abila 机场，乘客不明。",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,18,30,00",
+                        "headline":"GAStech 总部的几名代表抵达Abila 机场。",
+                        "text":"Homeland Illumination, Kronos Star: 抵达的代表是安全专家。",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,19,00,00",
+                        "headline":"Edvard Vann 否认自己参与绑架。",
+                        "text":"Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,19,45,00",
+                        "headline":"警方召开新闻发布会，表示大约14 名GAStech 员工下落不明。现在还没有迹象表示失踪人员已经离开Kronos 岛。晚宴的组织者尚不能联系到，但是对他的怀疑并没有依据。",
+                        "text":"Homeland Illumination & Kronos Star",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,20,22,32,00",
+                        "headline":"GAStech 总部人员去向",
+                        "text":"Homeland Illumination: 警察局, Kronos Star: 公司大楼",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,21,09,11,00",
+                        "headline":"警方召开新闻发布会，最终失踪人数是10 人，不能确定警方是否已经确认了被绑架的人是谁。",
+                        "text":"Homeland Illumination",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,21,10,16,00",
+                        "headline":"CEO 安全出现在Tethys",
+                        "text":"Homeland Illumination & Kronos Star, Homeland Illumination: 推测他乘坐了昨天的一架私人飞机离开。",
+                        "asset":
+                        {
+                            "media":"https://www.openshift.com/sites/default/files/bower-logo.png",
+                            "credit":"",
+                            "caption":""
+                        }
+                    },
+                    {
+                        "startDate":"2014,01,21,12,00,00",
+                        "headline":"Homeland Illumination 的记者Petrus Gerhard 表示自己在公共场合被POK 带走，现在不知道在什么地方，但是很安全。POK 通过他发布申明。",
+                        "text":"Homeland Illumination: 我们不能再向独裁政府和外国帝国主义公司的压迫低头了。我们正在努力争取我们的声音和你们的声音可以在被削弱和扭曲之前发表出来。我们选举出来的非但不作为反而忽略我们诉求的政府逼迫我们采取这种措施。昨天我们摧毁了一个由贪婪、腐化的外国商人和政府官员一起举办的庆祝活动，他们为了自己利益使我们这个伟大的国家99% 的普通人变贫穷。以示抵抗，我们逮捕了那些掠夺我们资源、杀死我们孩子和毁掉我们生活的“精英阶级”。我们要求两千万美元的赎金来缓解人民所遭受的痛苦。这是我们夺回我们国家的第一步。",
+                        "asset":
+                        {
+                            "credit":"http://infovis.rockidog.com:8000/static/timeline_js/embed/last_page.txt",
+                            "caption":""
+                        }
+                    }
+                ]
+            
+        
+    }
+}
