@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+ .link {
+   fill: none;
+   stroke-width: 2px;
+ }
+ .node {
+   fill: #ccc;
+   opacity: 0.3;
+ }
+ .chara {
+   font: 10px consolas;
+ }
+ .charaN {
+   fill: #09A5D2;
+   opacity: 0.6;
+ }
+ #detail {
+   position: relative;
+   top: -450px;
+   left: 100px;
+   width: 500px;
+   font: 16px consolas;
+ }
+
+</style>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" media="all" href="../../static/style/base.css" >
+  <link rel="stylesheet" type="text/css" media="all" href="../../static/style/index.css" >
+  <title>InfoVis Team Project</title>
+  <script type="text/javascript" src="../../static/lib/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../static/lib/bootstrap.min.css" />
+  <script type="application/javascript">
+   function setPage(url, height){
+     document.showframe.location.href = url;
+     frame = document.getElementById("showframe");
+     //console.log(frame);
+     frame.style.height = height;
+   }
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <div>        
+      <ul class="nav navbar-nav navbar-right"  style="margin-right: 0px">
+        <li><a href="../search-form" onclick="document.showframe.location.href='../search-form'">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-left">            
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Keyword Clouds
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing.txt', '600px');">Wordcloud-All</a></li>
+            <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing2014.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing2014.txt', '700px');">Wordcloud-2014</a></li>
+            <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/SummingPOK.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/SummingPOK.txt', '700px');">Wordcloud-POK</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Newspaper Relations
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="../paper-total" onclick="setPage('paper_total.html', '1000px');">Time-Total Reports</a></li>
+            <li><a href="../paper-frequency" onclick="setPage('paper_frequency.html'1000px');">Time-Reports' Ratio</a></li>
+            <li><a href="../newspaper-relation" onclick="setPage('newspaper_relation.html', '1000px');">Who-Copies-Who</a></li>
+          </ul>
+        </li>
+        <li><a href="../email-relation" onclick="setPage('force.html', '800px');">Mails & Resumes</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            About POK
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="../pok-timeline" onclick="setPage('../pok_timeline.html', '1000px');">Event Drops</a></li>
+            <li><a href="../pok-org" onclick="setPage('../pok_org.html', '1000px');">Extended Network</a></li>
+          </ul>
+        </li>
+        <li><a href="../event-timeline" onclick="setPage('event_timeline.html', '800px');">Crisis Timeline</a></li>
+        <li><a href="../final-timeline" onclick="setPage('final_timeline.html', '1000px');">Story Line</a></li>
+      </ul>
+    </div>
+  </nav>	
+  抛
+  <div style="position:relatvie; left:10px; font: 30px consolas;">The Storyline</div>
+  <div id="storyline"></div>
+  <div id="detail"></div>
+</body>
+<script src="../../static/lib/d3.min.js"></script>
+<script>
+ var width = 1500,
+ height = 1000
+ var svg = d3.select("body").select("#storyline").append("svg")
+			 .attr("width", width)
+			 .attr("height", height);
+
+ var people = [];
+ var years = [];
+ var yearsEvents = [];
+ var cntYearEvents = {};
+ var xScale;
+ var yScale = {};
+ d3.json("../../static/final_timeline/final_timeline.json", function(error, json) {
+   if (error) {
+	 console.log(error);
+	 return;
+   }
+   // 预处理事件
+   for (var i = 0; i < json.length; i++) {
+	 // 处理人物
+	 if (indexOfArray(json[i].name, people) < 0) {
+	   people.push(json[i].name);
+	 }
+	 // 处理事件
+	 for (var j = 0; j < json[i].events.length; j++) {
+	   // 得到事件的日期和当日序号
+	   var date = json[i].events[j].date;
+	   var cnt = "";
+	   for (var ti = 5; ti < date.length; ti++) {
+		 cnt = cnt + date[ti];
+	   }
+	   date = date[0] + date[1] + date[2] + date[3];
+	   // 插入数据
+	   if (indexOfArray(date, years) < 0) {
+		 years.push(date);
+		 cntYearEvents[date] = 1;
+	   } else {
+		 cntYearEvents[date]++;
+	   }
+	   var e = {};
+	   e['date'] = date;
+	   e['no'] = cnt;
+	   e['detail'] = json[i].events[j]['event'];
+	   yearsEvents.push(e);
+	 }
+   }
+   for (var i = 0; i < years.length - 1; i++) {
+	 for (var j = i + 1; j < years.length; j++) {
+	   if (years[i] > years[j]) {
+		 var t = years[i];
+		 years[i] = years[j];
+		 years[j] = t;
+	   }
+	 }
+   }
+   // 根据日期、每个日期的总时间数进行缩放，用于绘制时间圈
+   xScale = d3.scale.ordinal()
+					.domain(years)
+				 .rangeRoundPoints([240, width - 100]);
+   for (var i = 0; i < years.length; i++) {
+	 yScale[years[i]] = d3.scale.linear()
+						        .domain([0, cntYearEvents[years[i]]])
+						        .range([50, height + 100]);
+   }
+   drawPeople();
+   drawLinks(json);
+   drawEvents(yearsEvents);
+ });
+
+ var nodes = [];
+ var pScale;
+ function drawPeople() {
+   pScale = d3.scale.ordinal()
+					.domain(people)
+				 .rangeRoundPoints([50, height / 2 - 50]);
+   var chara = svg.selectAll(".chara")
+				  .data(people)
+				  .enter()
+				  .append("text")
+				  .attr("class", "chara")
+				  .text(function(d) { return d;})
+				  .attr("transform", function(d) {return "translate(" + 0 + "," + pScale(d) +")";});
+   var charaN = svg.selectAll(".charaN")
+				   .data(people)
+				   .enter()
+				   .append("circle")
+				   .attr("class", "charaN")
+				   .attr("r", 5)
+				   .style("fill", function(d) {
+	 return getColor(indexOfArray(d, people));
+   })
+				   .style("stroke-color", "#FFF")
+				   .attr("transform", function(d) {return "translate(" + 120 + "," + (pScale(d) - 5) +")";});
+ }
+
+ var link;
+ function drawEvents(data) {
+   for (var row = 0; row < data.length; row++) {
+	 var x = xScale(data[row]['date']);
+	 var y = yScale[data[row]['date']](data[row]['no']);
+	 var node = {};
+	 node['x'] = x;
+	 node['y'] = y;
+	 node['detail'] = data[row]['detail'];
+	 nodes.push(node);
+   }
+   var node = svg.selectAll(".node")
+				 .data(nodes)
+				 .enter()
+				 .append("circle")
+				 .attr("class", "node")
+				 .attr("r", 10)
+				 .style("stroke-color", "#000")
+				 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y +")";})
+				 .on("mouseover", function(d) {
+	 d3.select("body").select("#detail")
+	   .text(d.detail);
+	 // 亮出所有经过这里的线
+	 link.filter(function(l) {
+	   if ((l.source.x == d.x && l.source.y == d.y) ||
+		   (l.target.x == d.x && l.target.y == d.y)) {
+		 return true;
+	   }
+	   return false;
+	 })
+		 .style("stroke-opacity", 1)
+		 .style("stroke-width", "4px");
+   })
+				 .on("mouseleave", function(d) {
+	 d3.select("#detail")
+	   .text("");
+	 // 取消所有经过这里的线
+	 link.filter(function(l) {
+	   if ((l.source.x == d.x && l.source.y == d.y) ||
+		   (l.target.x == d.x && l.target.y == d.y)) {
+		 return true;
+	   }
+	   return false;
+	 })
+		 .style("stroke-opacity", 0.6)
+		 .style("stroke-width", "2px");
+   });
+ }
+
+ var links = [];
+ function drawLinks(data) {
+   for (var row = 0; row < data.length; row++) {
+	 var name = data[row].name;
+	 var lastPoint = {};
+	 var group = "";
+	 
+	 lastPoint['x'] = 120;
+	 lastPoint['y'] = pScale(name) - 5;
+	 //lastPoint['depth'] = 0;
+	 for (var i = 0; i < data[row].events.length; i++) {
+	   // 得到事件的日期和当日序号
+	   var date = data[row].events[i].date;
+	   var cnt = "";
+	   for (var ti = 5; ti < date.length; ti++) {
+		 cnt = cnt + date[ti];
+	   }
+	   date = date[0] + date[1] + date[2] + date[3];
+	   point = {};
+	   point['x'] = xScale(date);
+	   point['y'] = yScale[date](cnt);
+	   //point['depth'] = lastPoint['depth'] + 1;
+	   var tlink = {};
+	   tlink['source'] = lastPoint;
+	   tlink['target'] = point;
+	   tlink['group'] = row;
+	   tlink['person'] = name;
+	   links.push(tlink);
+	   lastPoint = point;
+	 }
+   }
+
+   var diagonal = d3.svg.diagonal()
+						.projection(function(d) { return [d.x, d.y]; });
+
+   link = svg.selectAll(".link")
+			 .data(links)
+			 .enter()
+			 .append("path")
+			 .attr("class", "link")
+			 .attr("d", diagonal)
+			 .style("stroke", function(d) {
+	 return getColor(d.group);
+   })
+			 .style("stroke-opacity", 0.6)
+			 .on("mouseover", function(d) {
+	 link.filter(function(t) {
+	   return (t.person == d.person);
+	 })
+		 .style("stroke-opacity", 1)
+		 .style("stroke-width", "4px");
+   })
+			 .on("mouseleave", function(d) {
+	 link.style("stroke-opacity", 0.6)
+		 .style("stroke-width", "2px");
+   });
+ }
+
+ function getColor(d) {
+   if (d < 10) { // POK
+	 return ("#09A5D2");
+   } else if (d < 13) { // others
+	 return ("#000");
+   } else { // GAS
+	 return ("#E162A5");
+   }
+ }
+
+ function indexOfArray(d, a) {
+   for (var i = 0; i < a.length; i++) {
+	 if (a[i] == d)
+	 return i;
+   }
+   return -1;
+ }
+</script>

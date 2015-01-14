@@ -18,8 +18,70 @@ body {
 }
 
 </style>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" media="all" href="../../static/style/base.css" >
+<link rel="stylesheet" type="text/css" media="all" href="../../static/style/index.css" >
+<title>InfoVis Team Project</title>
+<script type="text/javascript" src="../../static/lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../../static/lib/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/lib/bootstrap.min.css" />
+    <script type="application/javascript">
+    function setPage(url, height){
+        document.showframe.location.href = url;
+        frame = document.getElementById("showframe");
+        //console.log(frame);
+        frame.style.height = height;
+    }
+    </script>
+</head>
 <script src="../../static/lib/d3.min.js"></script>
 <body>
+	<nav class="navbar navbar-default" role="navigation">
+    <div>        
+        <ul class="nav navbar-nav navbar-right"  style="margin-right: 0px">
+            <li><a href="../search-form" onclick="document.showframe.location.href='../search-form'">Home</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-left">            
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Keyword Clouds
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing.txt', '600px');">Wordcloud-All</a></li>
+                    <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing2014.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/Summing2014.txt', '700px');">Wordcloud-2014</a></li>
+                    <li><a href="http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/SummingPOK.txt" onclick="setPage('http://www.jasondavies.com/wordcloud/#http://infovis.rockidog.com:8000/static/wordcloudgen/SummingPOK.txt', '700px');">Wordcloud-POK</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Newspaper Relations
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="../paper-total" onclick="setPage('paper_total.html', '1000px');">Time-Total Reports</a></li>
+                    <li><a href="../paper-frequency" onclick="setPage('paper_frequency.html'1000px');">Time-Reports' Ratio</a></li>
+                    <li><a href="../newspaper-relation" onclick="setPage('newspaper_relation.html', '1000px');">Who-Copies-Who</a></li>
+                </ul>
+            </li>
+            <li><a href="../email-relation" onclick="setPage('force.html', '800px');">Mails & Resumes</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    About POK
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="../pok-timeline" onclick="setPage('../pok_timeline.html', '1000px');">Event Drops</a></li>
+                    <li><a href="../pok-org" onclick="setPage('../pok_org.html', '1000px');">Extended Network</a></li>
+                </ul>
+            </li>
+            <li><a href="../event-timeline" onclick="setPage('event_timeline.html', '800px');">Crisis Timeline</a></li>
+            <li><a href="../final-timeline" onclick="setPage('final_timeline.html', '1000px');">Story Line</a></li>
+        </ul>
+    </div>
+</nav>	
+
 <script>
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},

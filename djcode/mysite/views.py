@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.template.loader import get_template
 from django.template import Context
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.files import File
 import math
 import re
@@ -114,6 +115,10 @@ def email_relation(request):
     return render(
             request,
             'app/force.html')
+def final_timeline(request):
+    return render(
+            request,
+            'app/final_timeline.html')
 def search_form(request):
     return render(
             request,
@@ -122,8 +127,35 @@ def search_form(request):
             #template_name = '/Users/Adward/Github/Info-Retrieval-Project/djcode/mysite',
             #context_instance=RequestContext(request)
             )
+def search_form_basic(request):
+    return render(
+            request,
+            'app/search_form_basic.html')
 
 def search(request):
+    result = 0
+    if 'q' in request.GET:
+        qword,query = query_filter(request.GET['q'].lower().split(' '))
+        result = readIndex(query) #n needed
+        if result>=0:
+            message = "<p><b></b></p><br>#####<br>"+showResult(result)
+        else:
+            message = 'No such word.'
+    else:
+        message = 'You submitted an empty query.'
+    #return HttpResponse(message)
+    fpath = '/root/Adward/djcode/mysite/static/tmp/'
+    if result==0:
+        fname = "no_such_word.html"
+    else:
+        fname = str(query).strip("'[]u").replace(',','_')+'.html'
+    f = open(fpath+fname,'w')
+    f.write(message)
+    f.close()
+    return HttpResponseRedirect("http://www.jasondavies.com/wordcloud/#http://106.187.91.39:8000/static/tmp/"+fname)
+
+def search_basic(request):
+    result = 0
     if 'q' in request.GET:
         qword,query = query_filter(request.GET['q'].lower().split(' '))
         result = readIndex(query) #n needed
@@ -142,7 +174,7 @@ def readIndex(query,n=1000):#n is the number of total docs
         dic[term]=[]
         df=0
         try:
-            myfile=File(open("/root/Adward/djcode/mysite/index/"+term))
+            myfile=File(open("/root/Adward/djcode/mysite/static/index/"+term))
             for line in myfile:
                 dic[term].append(line.split(':'))
                 df+=1
