@@ -8,6 +8,9 @@ from django.core.files import File
 import math
 import re
 from django.template.context import RequestContext
+import os
+
+base_dir = os.path.dirname(__file__)
 
 def query_filter(que):
     qword=""
@@ -144,7 +147,8 @@ def search(request):
     else:
         message = 'You submitted an empty query.'
     #return HttpResponse(message)
-    fpath = '/root/Adward/djcode/mysite/static/tmp/'
+    fpath = os.path.join(base_dir, 'static/tmp/')
+#    fpath = '/root/Adward/djcode/mysite/static/tmp/'
     if result==0:
         fname = "no_such_word.html"
     else:
@@ -174,7 +178,8 @@ def readIndex(query,n=1000):#n is the number of total docs
         dic[term]=[]
         df=0
         try:
-            myfile=File(open("/root/Adward/djcode/mysite/static/index/"+term))
+            fpath = os.path.join(base_dir, 'static/index/', term)
+            myfile=File(open(fpath))
             for line in myfile:
                 dic[term].append(line.split(':'))
                 df+=1
@@ -214,8 +219,9 @@ def readIndex(query,n=1000):#n is the number of total docs
 def showResult(result):
     show=""
     for doc in result:
-        url = '/root/Adward/djcode/mysite/static/docs/'+doc[0]+'.txt'
-        myfile=File(open(url))
+        fpath = os.path.join(base_dir, 'static/docs/', doc[0]+'.txt')
+#        url = '/root/Adward/djcode/mysite/static/docs/'+doc[0]+'.txt'
+        myfile=File(open(fpath))
         l=0
         for line in myfile:
             if line.strip('\n')=='':

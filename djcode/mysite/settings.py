@@ -10,17 +10,20 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATICFILES_DIRS = (
-    '/root/Adward/djcode/mysite/static/',
+#    '/root/Adward/djcode/mysite/static/',
+    os.path.join(BASE_DIR, 'mysite', 'static'),
 )
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/root/Adward/djcode/mysite/',
+    os.path.join(BASE_DIR, 'mysite'),
+#    '/root/Adward/djcode/mysite/',
 )
 
 # Quick-start development settings - unsuitable for production
